@@ -8,7 +8,7 @@ const Homelayout = ({ children }: Props) => {
   return (
     <>
       <main>
-        <div className="grid grid-cols-12 mx-auto max-w-[1879px] min-h-screen">
+        <div className="grid grid-cols-12 mx-auto min-h-screen">
           {/* LEFT */}
           <HomeLeft />
           {/* MIDDLE */}

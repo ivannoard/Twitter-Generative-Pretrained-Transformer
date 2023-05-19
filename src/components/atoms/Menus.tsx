@@ -16,7 +16,7 @@ const Menus: React.FC = () => {
             </p>
           ))}
         </div>
-        <button className="bg-blue-500 py-2 mt-10 text-white rounded-full">
+        <button className="bg-blue-500 py-2 mt-10 text-white rounded-full w-full">
           Tweet
         </button>
       </div>
