@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { HomeLayout } from "../components";
 import { Beranda, DetailTweet, Profil } from "./views";
 
 const Home: React.FC = () => {
   const [view, setView] = React.useState<JSX.Element>(<Beranda />);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     switch (pathname.split("/")[1]) {
@@ -22,6 +23,7 @@ const Home: React.FC = () => {
         break;
     }
   }, [pathname]);
+
   return (
     <>
       <HomeLayout>{view}</HomeLayout>

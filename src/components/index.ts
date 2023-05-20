@@ -5,6 +5,7 @@ export { default as QuestionTweet } from "./atoms/QuestionTweet";
 export { default as TweetDetail } from "./atoms/TweetDetail";
 export { default as ViewHeader } from "./atoms/ViewHeader";
 export { default as SocialMedias } from "./atoms/SocialMedias";
+export { default as LoadingState } from "./atoms/LoadingState";
 
 // molecules
 export { default as HomeLeft } from "./molecules/HomeLeft";
