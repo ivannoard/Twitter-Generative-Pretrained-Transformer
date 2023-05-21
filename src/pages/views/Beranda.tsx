@@ -22,8 +22,9 @@ const Beranda = () => {
       </div>
       <hr />
       <div className="px-5 mt-5 flex flex-col gap-5">
-        {questionDummyTweets.map((item) => (
+        {questionDummyTweets.map((item, index) => (
           <QuestionTweet
+            key={index}
             navigate={navigate}
             id={item.id}
             question={item.question}

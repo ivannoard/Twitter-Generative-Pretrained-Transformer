@@ -8,8 +8,12 @@ const Menus: React.FC = () => {
     <>
       <div className="mt-8 flex flex-col justify-between">
         <div className="flex flex-col gap-5">
-          {navMenu.map((item) => (
-            <p className="cursor-pointer" onClick={() => navigate(item.path)}>
+          {navMenu.map((item, index) => (
+            <p
+              key={index}
+              className="cursor-pointer"
+              onClick={() => navigate(item.path)}
+            >
               <span className="hover:bg-gray-200 px-5 py-2 rounded-full">
                 {item.name}
               </span>

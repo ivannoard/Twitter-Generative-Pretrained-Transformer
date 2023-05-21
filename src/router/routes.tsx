@@ -1,31 +1,20 @@
-import React, { Suspense } from "react";
-
-const Home = React.lazy(() => import("../pages/Home"));
-const NotFound = React.lazy(() => import("../pages/NotFound"));
+import { Beranda, DetailTweet, Profil } from "../pages/views";
 
 const routes = [
   {
     name: "Homepage",
-    authorized: true,
-    element: <Home />,
     path: "/beranda",
+    view: <Beranda />,
   },
   {
     name: "Profil",
-    authorized: true,
-    element: <Home />,
     path: "/profil",
+    view: <Profil />,
   },
   {
     name: "Detail Tweet",
-    authorized: true,
-    element: <Home />,
     path: "/detail/:id",
-  },
-  {
-    name: "Not Found",
-    element: <NotFound />,
-    path: "*",
+    view: <DetailTweet />,
   },
 ];
 

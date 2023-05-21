@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import {
   BrowserRouter,
   Navigate,
@@ -5,12 +6,9 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import routes from "./routes";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import Redirect from "../pages/Redirect";
-import { Suspense } from "react";
+import { Login, Register, Redirect, Home, NotFound } from "../pages";
 import { LoadingState } from "../components";
+import routes from "./routes";
 
 const CantGoBack = () => {
   const auth = localStorage.getItem("data_user");
@@ -27,19 +25,15 @@ const Router = () => {
     <BrowserRouter>
       <Suspense fallback={<LoadingState />}>
         <Routes>
-          <Route path={"/"} element={<Redirect />} />
+          <Route path="/" element={<Redirect />} />
+          <Route path="*" element={<NotFound />} />
           <Route element={<CantGoBack />}>
             <Route path={"/auth/login"} element={<Login />} />
             <Route path={"/auth/register"} element={<Register />} />
           </Route>
           <Route element={<PrivateRoute />}>
             {routes.map((route, index) => (
-              <Route
-                key={index}
-                // authorized={route.authorized}
-                path={route.path}
-                element={route.element}
-              />
+              <Route key={index} path={route.path} element={<Home />} />
             ))}
           </Route>
         </Routes>
