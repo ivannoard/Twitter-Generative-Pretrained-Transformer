@@ -1,18 +1,13 @@
 import { createContext, useReducer } from "react";
+import { TweetType } from "../utils/types";
 
 type TweetProps = {
   children: JSX.Element;
 };
 
-type TweetAction = {
+export type TweetAction = {
   type: "ADD";
   payload: TweetType;
-};
-
-type TweetType = {
-  id: number;
-  question: string;
-  answer: string;
 };
 
 type initialStateType = {

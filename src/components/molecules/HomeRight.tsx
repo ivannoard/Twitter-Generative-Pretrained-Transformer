@@ -1,18 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import HistoryContent from "../atoms/HistoryContent";
+import TrendingContent from "../atoms/TrendingContent";
+import { TweetContext } from "../../context/TweetContext";
 
 const HomeRight = () => {
+  const { state } = useContext(TweetContext);
   const [active, setActive] = useState("Trending");
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState<JSX.Element>();
   useEffect(() => {
     switch (active) {
       case "Trending":
-        return setContent("trending content");
+        return setContent(<TrendingContent />);
       case "History":
-        return setContent("history content");
+        return setContent(<HistoryContent data={state.data} />);
       default:
         break;
     }
-  }, [active]);
+  }, [active, state.data]);
 
   return (
     <>
@@ -24,9 +28,7 @@ const HomeRight = () => {
           <h4 className="font-semibold">History</h4>
         </button>
       </div>
-      <div className="sticky top-0 py-1 px-1 mt-5">
-        <div className="bg-blue-100 rounded-full px-5 py-2 mt-5">{content}</div>
-      </div>
+      <div className="sticky top-0 py-1 px-1 mt-5">{content}</div>
     </>
   );
 };
