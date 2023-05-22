@@ -1,10 +1,7 @@
+import { Outlet } from "react-router-dom";
 import { HomeLeft, HomeRight } from "..";
 
-type Props = {
-  children: JSX.Element;
-};
-
-const Homelayout = ({ children }: Props) => {
+const Homelayout = () => {
   return (
     <>
       <main>
@@ -13,7 +10,7 @@ const Homelayout = ({ children }: Props) => {
           <HomeLeft />
           {/* MIDDLE */}
           <div className="middle col-span-6 border-l-2 border-r-2 border-gray-200 w-full">
-            {children}
+            <Outlet />
           </div>
           {/* RIGHT */}
           <div className="right col-span-3 px-5">

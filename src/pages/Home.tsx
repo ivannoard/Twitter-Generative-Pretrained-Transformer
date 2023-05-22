@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { HomeLayout } from "../components";
+// import { HomeLayout } from "../components";
 import routes from "../router/routes";
 import { Beranda } from "./views";
 
@@ -15,11 +15,7 @@ const Home = () => {
     setView(getRoute.view);
   }, [pathname]);
 
-  return (
-    <>
-      <HomeLayout>{view}</HomeLayout>
-    </>
-  );
+  return <>{/* <HomeLayout>{view}</HomeLayout> */}</>;
 };
 
 export default Home;

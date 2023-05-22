@@ -1,9 +1,12 @@
+import Context from "./context";
 import Router from "./router";
 
 function App() {
   return (
     <>
-      <Router />
+      <Context>
+        <Router />
+      </Context>
     </>
   );
 }

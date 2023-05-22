@@ -6,8 +6,8 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import { Login, Register, Redirect, Home, NotFound } from "../pages";
-import { LoadingState } from "../components";
+import { HomeLayout, LoadingState } from "../components";
+import { Login, NotFound, Redirect, Register } from "../pages";
 import routes from "./routes";
 
 const CantGoBack = () => {
@@ -31,10 +31,12 @@ const Router = () => {
             <Route path={"/auth/login"} element={<Login />} />
             <Route path={"/auth/register"} element={<Register />} />
           </Route>
-          <Route element={<PrivateRoute />}>
-            {routes.map((route, index) => (
-              <Route key={index} path={route.path} element={<Home />} />
-            ))}
+          <Route element={<HomeLayout />}>
+            <Route element={<PrivateRoute />}>
+              {routes.map((route, index) => (
+                <Route key={index} path={route.path} element={route.view} />
+              ))}
+            </Route>
           </Route>
         </Routes>
       </Suspense>
