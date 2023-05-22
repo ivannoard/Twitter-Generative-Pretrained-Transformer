@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
-import HistoryContent from "../atoms/HistoryContent";
-import TrendingContent from "../atoms/TrendingContent";
 import { TweetContext } from "../../context/TweetContext";
+import { HistoryContent, TrendingContent } from "..";
 
 const HomeRight = () => {
   const { state } = useContext(TweetContext);

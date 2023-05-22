@@ -6,6 +6,8 @@ export { default as TweetDetail } from "./atoms/TweetDetail";
 export { default as ViewHeader } from "./atoms/ViewHeader";
 export { default as SocialMedias } from "./atoms/SocialMedias";
 export { default as LoadingState } from "./atoms/LoadingState";
+export { default as HistoryContent } from "./atoms/HistoryContent";
+export { default as TrendingContent } from "./atoms/TrendingContent";
 
 // molecules
 export { default as HomeLeft } from "./molecules/HomeLeft";
