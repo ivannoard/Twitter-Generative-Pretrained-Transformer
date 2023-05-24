@@ -1,7 +1,5 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { db } from "../firebase";
 
 type FormProps = {
   email?: string;

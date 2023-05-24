@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { TweetDetail, ViewHeader } from "../../components";
-import { questionDummyTweets } from "../../models/tweets";
 import { TweetContext } from "../../context/TweetContext";
 
 type TweetId = {
