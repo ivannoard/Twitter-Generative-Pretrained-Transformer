@@ -1,14 +1,17 @@
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { TweetDetail, ViewHeader } from "../../components";
 import { questionDummyTweets } from "../../models/tweets";
+import { TweetContext } from "../../context/TweetContext";
 
 type TweetId = {
   id: string;
 };
 
 const DetailTweet = () => {
+  const { state } = useContext(TweetContext);
   const { id } = useParams<TweetId>();
-  const detailTweet = questionDummyTweets.filter(
+  const detailTweet = state.data?.filter(
     (item) => item.id === parseInt(id || "")
   )[0];
   return (

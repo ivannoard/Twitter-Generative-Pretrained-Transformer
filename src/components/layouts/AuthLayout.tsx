@@ -1,11 +1,12 @@
+import { Outlet } from "react-router-dom";
 import { SocialMedias } from "..";
 import { socialmedias } from "../../utils/socialmedia";
 
-type AuthLayoutProps = {
-  children: JSX.Element;
-};
+// type AuthLayoutProps = {
+//   children: JSX.Element;
+// };
 
-const AuthLayout = ({ children }: AuthLayoutProps) => {
+const AuthLayout = () => {
   return (
     <>
       <main>
@@ -21,8 +22,9 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
                 <span className="text-blue-500 font-semibold">Creator</span>
               </p>
               <div className="social-medias mt-2 flex flex-col gap-2">
-                {socialmedias.map((item) => (
+                {socialmedias.map((item, index) => (
                   <SocialMedias
+                    key={index}
                     name={item.name}
                     username={item.username}
                     url={item.url}
@@ -31,7 +33,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
               </div>
             </div>
           </div>
-          <div className="col-span-4 bg-blue-500 px-5">{children}</div>
+          <div className="col-span-4 bg-blue-500 px-5">{<Outlet />}</div>
         </div>
       </main>
     </>

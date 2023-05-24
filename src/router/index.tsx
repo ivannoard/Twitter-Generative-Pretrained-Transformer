@@ -6,7 +6,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import { HomeLayout, LoadingState } from "../components";
+import { AuthLayout, HomeLayout, LoadingState } from "../components";
 import { Login, NotFound, Redirect, Register } from "../pages";
 import routes from "./routes";
 
@@ -27,9 +27,11 @@ const Router = () => {
         <Routes>
           <Route path="/" element={<Redirect />} />
           <Route path="*" element={<NotFound />} />
-          <Route element={<CantGoBack />}>
-            <Route path={"/auth/login"} element={<Login />} />
-            <Route path={"/auth/register"} element={<Register />} />
+          <Route element={<AuthLayout />}>
+            <Route element={<CantGoBack />}>
+              <Route path={"/auth/login"} element={<Login />} />
+              <Route path={"/auth/register"} element={<Register />} />
+            </Route>
           </Route>
           <Route element={<HomeLayout />}>
             <Route element={<PrivateRoute />}>
