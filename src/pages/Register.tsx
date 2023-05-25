@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
+import { authService } from "../services/authService";
 
 type FormProps = {
   email?: string;
@@ -33,29 +34,41 @@ const Register = () => {
   async function handleRegister(e: React.FormEvent<HTMLFormElement>) {
     // do verify confirm password is password
     e.preventDefault();
-    console.log(fields);
     if (fields?.password !== fields?.confirmPassword) {
       return toast.error("Confirm password and password is not match!");
     }
-    const registerData = {
-      username: fields?.username,
-      email: fields?.email,
-      password: fields?.password,
-    };
 
     try {
-      await addDoc(collection(db, "users"), registerData)
-        .then(() => {
-          toast.success("Register success!");
+      const response = await authService.post("/register", fields);
+      if (response.data.status === 200) {
+        toast.success("Register success");
+        setTimeout(() => {
           navigate("/auth/login");
-          return;
-        })
-        .catch(() => {
-          toast.error("Register failed!");
-        });
+        }, 1000);
+      }
     } catch (e) {
-      console.log(e);
+      toast.error(e.response.data.message);
     }
+
+    // const registerData = {
+    //   username: fields?.username,
+    //   email: fields?.email,
+    //   password: fields?.password,
+    // };
+
+    // try {
+    //   await addDoc(collection(db, "users"), registerData)
+    //     .then(() => {
+    //       toast.success("Register success!");
+    //       navigate("/auth/login");
+    //       return;
+    //     })
+    //     .catch(() => {
+    //       toast.error("Register failed!");
+    //     });
+    // } catch (e) {
+    //   console.log(e);
+    // }
   }
 
   useEffect(() => {

@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { authService } from "../services/authService";
 
 type FormProps = {
   email?: string;
@@ -20,15 +22,21 @@ const Login = () => {
 
   async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // const userQuery = query(
-    //   collection(db, "users"),
-    //   where("email", "==", fields?.email)
-    // );
-
-    // await getDocs(userQuery).then((response) => console.log(response));
-
-    localStorage.setItem("data_user", JSON.stringify(fields));
-    navigate("/beranda");
+    try {
+      const response = await authService.post("/login", {
+        email: fields?.email,
+        password: fields?.password,
+      });
+      if (response.data.status === 200) {
+        toast.success("Login success!");
+        localStorage.setItem("data_user", JSON.stringify(response.data.data));
+        setTimeout(() => {
+          navigate("/beranda");
+        }, 1000);
+      }
+    } catch (e) {
+      toast.error(e.response.data.message);
+    }
   }
 
   return (
