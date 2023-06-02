@@ -2,7 +2,6 @@
 export { default as Logo } from "./atoms/Logo";
 export { default as Menus } from "./atoms/Menus";
 export { default as TweetDetail } from "./atoms/TweetDetail";
-export { default as ViewHeader } from "./atoms/ViewHeader";
 export { default as SocialMedias } from "./atoms/SocialMedias";
 export { default as LoadingState } from "./atoms/LoadingState";
 export { default as LoadingPage } from "./atoms/LoadingPage";
@@ -22,3 +21,4 @@ export { default as AuthLayout } from "./layouts/AuthLayout";
 export { default as QuestionTweet } from "./global/QuestionTweet";
 export { default as ReplyTweet } from "./global/ReplyTweet";
 export { default as ModalTweet } from "./global/ModalTweet";
+export { default as ViewHeader } from "./global/ViewHeader";
