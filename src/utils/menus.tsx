@@ -28,7 +28,7 @@ const navMenu = [
   {
     id: 4,
     name: "Pesan",
-    path: "/pesan",
+    path: `/pesan/${userData.id}`,
     icon: <FaEnvelope size={22} className="text-gray-500" />,
   },
   {

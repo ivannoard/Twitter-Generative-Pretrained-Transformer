@@ -1,4 +1,4 @@
-import { Beranda, DetailTweet, Markah, Profil } from "../pages/views";
+import { Beranda, DetailTweet, Markah, Pesan, Profil } from "../pages/views";
 
 const routes = [
   {
@@ -20,6 +20,11 @@ const routes = [
     name: "Markah Tweet",
     path: "/markah",
     view: <Markah />,
+  },
+  {
+    name: "Pesan Tweet",
+    path: "/pesan/:id",
+    view: <Pesan />,
   },
 ];
 

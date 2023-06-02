@@ -24,7 +24,7 @@ const ReplyTweet = ({
           <div className="top">
             <div className="mb-3">
               <div className="flex gap-2">
-                <div className="bg-gray-500 w-[45px] h-[45px] rounded-full"></div>
+                <div className="bg-gray-500 w-[45px] h-[45px] rounded-full" />
                 <div className="">
                   <div className="flex items-center gap-2">
                     <NavLink

@@ -8,6 +8,7 @@ export { default as LoadingState } from "./atoms/LoadingState";
 export { default as LoadingPage } from "./atoms/LoadingPage";
 export { default as HistoryContent } from "./atoms/HistoryContent";
 export { default as TrendingContent } from "./atoms/TrendingContent";
+export { default as MessageCard } from "./atoms/MessageCard";
 
 // molecules
 export { default as HomeLeft } from "./molecules/HomeLeft";
