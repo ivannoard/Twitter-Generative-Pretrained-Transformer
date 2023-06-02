@@ -1,8 +1,6 @@
-import { addDoc, collection } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { db } from "../firebase";
 import { authService } from "../services/authService";
 
 type FormProps = {

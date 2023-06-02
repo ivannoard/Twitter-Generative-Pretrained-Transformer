@@ -141,9 +141,9 @@ const Profil: React.FC = () => {
             ))}
           </div>
           {/* content */}
-          <div className="p-5 flex flex-col gap-3">
-            {active === "Tweets" &&
-              dataUser?.tweets.map((item, index) => (
+          {active === "Tweets" &&
+            dataUser?.tweets.map((item, index) => (
+              <div className="p-5 flex flex-col gap-3">
                 <QuestionTweet
                   key={index}
                   id={Number(item.id)}
@@ -155,8 +155,8 @@ const Profil: React.FC = () => {
                   created_at={item.created_at}
                   navigate={navigate}
                 />
-              ))}
-          </div>
+              </div>
+            ))}
           {active === "Reply" &&
             dataUserReplies?.map((item, index) => (
               <ReplyTweet
