@@ -6,7 +6,7 @@ type TweetProps = {
 };
 
 export type TweetAction = {
-  type: "ADD";
+  type: "INIT" | "ADD";
   payload: TweetType;
 };
 
@@ -28,14 +28,24 @@ export const TweetContext = createContext<{
 
 const TweetReducer = (state: initialStateType, action: TweetAction) => {
   switch (action.type) {
+    case "INIT": {
+      const concatTweets = state.data.concat(action.payload);
+      const uniqueConcat = [
+        ...new Map(concatTweets.map((tweet) => [tweet.id, tweet])).values(),
+      ];
+      return {
+        ...state,
+        data: uniqueConcat,
+      };
+    }
     case "ADD": {
       const concatTweets = [
-        ...state.data,
         {
           id: action.payload.id,
           question: action.payload.question,
           answer: action.payload.answer,
         },
+        ...state.data,
       ];
       return {
         ...state,

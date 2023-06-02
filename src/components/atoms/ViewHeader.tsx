@@ -13,7 +13,7 @@ const ViewHeader: React.FC<HeaderType> = ({ title, isBorder }) => {
           isBorder ? "border-b-2 border-gray-200 sticky top-0" : ""
         } px-5 py-3`}
       >
-        <h4 className="text-xl text-semibold">{title}</h4>
+        <h4 className="text-xl font-semibold">{title}</h4>
       </div>
     </>
   );

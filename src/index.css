@@ -5,3 +5,15 @@
 .auth-input {
   @apply block px-3 py-1 border w-full mt-1 rounded-md;
 }
+
+.sidebar-nav:hover {
+  @apply bg-gray-200;
+}
+
+.sidebar-nav.active {
+  @apply bg-gray-200 font-semibold;
+}
+
+.sidebar-nav.active > svg {
+  @apply text-blue-500;
+}

@@ -1,23 +1,26 @@
 import React from "react";
-import { navMenu } from "../../utils/menus";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import navMenu from "../../utils/menus";
 
 const Menus: React.FC = () => {
-  const navigate = useNavigate();
   return (
     <>
       <div className="mt-8 flex flex-col justify-between">
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-2">
           {navMenu.map((item, index) => (
-            <p
+            <div
               key={index}
-              className="cursor-pointer"
-              onClick={() => navigate(item.path)}
+              className="cursor-pointer flex items-center"
+              // onClick={() => navigate(item.path)}
             >
-              <span className="hover:bg-gray-200 px-5 py-2 rounded-full">
+              <NavLink
+                to={item.path}
+                className="flex items-center gap-2 px-5 py-2 rounded-full sidebar-nav"
+              >
+                {item.icon}
                 {item.name}
-              </span>
-            </p>
+              </NavLink>
+            </div>
           ))}
         </div>
         <button className="bg-blue-500 py-2 mt-10 text-white rounded-full w-full">
