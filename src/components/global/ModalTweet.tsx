@@ -41,13 +41,11 @@ const ModalTweet = ({
         tweet_id: tweetId,
       });
       if (response.data.status === 200) {
-        console.log(response);
         toast.success("Success reply this tweet");
         setTweetReply(response.data.data);
         setIsOpenModal(false);
       }
     } catch (e) {
-      console.log(e);
       toast.error("Cannot reply this tweet now");
     }
   }

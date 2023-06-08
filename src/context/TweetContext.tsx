@@ -1,5 +1,6 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useEffect } from "react";
 import { TweetType } from "../utils/types";
+import { tweetsService } from "../services/tweetService";
 
 type TweetProps = {
   children: JSX.Element;
@@ -35,7 +36,9 @@ const TweetReducer = (state: initialStateType, action: TweetAction) => {
       ];
       return {
         ...state,
-        data: uniqueConcat,
+        data: uniqueConcat.map((item) => {
+          return { ...item, isLike: false };
+        }),
       };
     }
     case "ADD": {
@@ -44,6 +47,11 @@ const TweetReducer = (state: initialStateType, action: TweetAction) => {
           id: action.payload.id,
           question: action.payload.question,
           answer: action.payload.answer,
+          username: action.payload.username,
+          email: action.payload.email,
+          created_at: action.payload.created_at,
+          user_id: action.payload.user_id,
+          likes: action.payload.likes,
         },
         ...state.data,
       ];
@@ -59,6 +67,22 @@ const TweetReducer = (state: initialStateType, action: TweetAction) => {
 
 export const TweetProvider = ({ children }: TweetProps) => {
   const [state, dispatch] = useReducer(TweetReducer, initialState);
+  const token = JSON.parse(localStorage.getItem("data_user") || "{}");
+
+  useEffect(() => {
+    const getMyTweets = async () => {
+      await tweetsService
+        .get("/mytweets", {
+          headers: {
+            Authorization: `Bearer ${token.token}`,
+          },
+        })
+        .then((response) => {
+          dispatch({ type: "INIT", payload: response.data.data });
+        });
+    };
+    if (state.data.length === 0) getMyTweets();
+  }, [state.data.length, token.token]);
 
   // const value = {
   //   tweets: state.tweets,

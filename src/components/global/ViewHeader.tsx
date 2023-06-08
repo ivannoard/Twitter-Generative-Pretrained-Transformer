@@ -10,7 +10,6 @@ type HeaderType = {
 const ViewHeader: React.FC<HeaderType> = ({ title, isBorder }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  console.log(pathname);
   return (
     <>
       <div
@@ -25,7 +24,7 @@ const ViewHeader: React.FC<HeaderType> = ({ title, isBorder }) => {
             size={18}
           />
         )}
-        <h4 className="text-xl font-semibold">{title}</h4>
+        <h4 className="text-xl font-semibold mb-1">{title}</h4>
       </div>
     </>
   );

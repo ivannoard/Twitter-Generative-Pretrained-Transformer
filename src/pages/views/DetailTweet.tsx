@@ -7,6 +7,7 @@ import {
   ViewHeader,
 } from "../../components";
 import { tweetsService } from "../../services/tweetService";
+import { toast } from "react-hot-toast";
 
 type ReplyProps = {
   id?: string;
@@ -26,6 +27,9 @@ type TweetProps = {
   created_at?: string;
   user_id: string;
   replies: ReplyProps[];
+  likes: number;
+  likesArr: [];
+  isLike?: boolean;
 };
 
 const DetailTweet = () => {
@@ -42,24 +46,18 @@ const DetailTweet = () => {
     try {
       const response = await tweetsService.get(`/tweets/${id}`);
       if (response.data.status === 200) {
+        console.log(response);
         setDetailTweet(response.data.data);
+        setTweetReplies(response.data.data[0]?.replies);
       }
     } catch (e) {
-      console.log(e);
+      toast.error(e);
     }
   }
-
-  console.log(tweetReply);
-  console.log(tweetReplies);
-
-  useEffect(() => {
-    setTweetReplies(detailTweet[0]?.replies);
-  }, [detailTweet]);
 
   useEffect(() => {
     if (Object.keys(tweetReply).length > 0) {
       setTweetReplies([tweetReply as ReplyProps, ...tweetReplies]);
-      // tweetReplies.unshift(tweetReply as ReplyProps);
     }
   }, [tweetReply]);
 
@@ -67,7 +65,7 @@ const DetailTweet = () => {
     getDetailTweet(parseInt(id || ""));
   }, [id]);
 
-  console.log(tweetReplies?.reverse());
+  console.log(detailTweet);
 
   return (
     <>
@@ -90,6 +88,12 @@ const DetailTweet = () => {
             username={detailTweet[0]?.username || ""}
             email={detailTweet[0]?.email || ""}
             created_at={detailTweet[0]?.created_at || ""}
+            likes={detailTweet[0]?.likes}
+            likesArr={detailTweet[0]?.likesArr}
+            isLike={detailTweet[0]?.isLike || false}
+            setDetailTweet={setDetailTweet}
+            tweetReply={tweetReply}
+            cardType="Detail"
           />
         )}
         <div className="grid grid-cols-12 mt-3">

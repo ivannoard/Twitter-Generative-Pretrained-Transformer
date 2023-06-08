@@ -23,4 +23,6 @@ export { default as AuthLayout } from "./layouts/AuthLayout";
 export { default as QuestionTweet } from "./global/QuestionTweet";
 export { default as ReplyTweet } from "./global/ReplyTweet";
 export { default as ModalTweet } from "./global/ModalTweet";
+export { default as LikesTweet } from "./global/LikesTweet";
+export { default as MarkTweet } from "./global/MarkTweet";
 export { default as ViewHeader } from "./global/ViewHeader";

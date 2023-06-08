@@ -6,7 +6,6 @@ import ModalMessage from "../../components/global/ModalMessage";
 const Pesan = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messageHeader, setMessageHeader] = useState("");
-  console.log(messageHeader);
   return (
     <>
       <ViewHeader title="Pesan" isBorder={true} />

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { LoadingPage, QuestionTweet, ViewHeader } from "../../components";
 import { TweetContext } from "../../context/TweetContext";
 import { tweetsService } from "../../services/tweetService";
+import { toast } from "react-hot-toast";
 // import { questionDummyTweets } from "../../models/tweets";
 
 type TweetProps = {
@@ -13,10 +14,14 @@ type TweetProps = {
   email: string;
   created_at: string;
   user_id: number;
+  likes: number;
+  likesArr: [];
+  isLike?: boolean;
 };
 
 const Beranda = () => {
   const token = JSON.parse(localStorage.getItem("data_user") || "{}");
+  const { state } = useContext(TweetContext);
   const [myTweets, setMyTweets] = useState<TweetProps[]>([]);
   const [peopleTweets, setPeopleTweets] = useState<TweetProps[]>([]);
   const [fields, setFields] = useState("");
@@ -42,6 +47,20 @@ const Beranda = () => {
     setFields(e.target.value);
   }
 
+  async function getMyTweets(userToken: string) {
+    setIsLoading(true);
+    await tweetsService
+      .get("/mytweets", {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
+      .then((response) => {
+        setIsLoading(false);
+        setMyTweets(response.data.data);
+      });
+  }
+
   async function getPeopleTweets() {
     setIsLoading(true);
     await tweetsService.get("/tweets").then((response) => {
@@ -56,7 +75,7 @@ const Beranda = () => {
     setIsLoading(true);
     try {
       const response = await tweetsService.post(
-        "/tweets",
+        "/mytweets",
         {
           question: fields,
         },
@@ -70,10 +89,18 @@ const Beranda = () => {
       if (response.data.status === 200) {
         setIsLoading(false);
         getPeopleTweets();
+        getMyTweets(token.token);
         const data = {
           id: response.data.data.id,
           question: response.data.data.question,
           answer: response.data.data.answer,
+          created_at: response.data.data.created_at,
+          email: response.data.data.email,
+          likes: 0,
+          isLike: false,
+          user_id: token.id,
+          username: response.data.data.username,
+          likesArr: [],
         };
         setMyTweets([response.data.data, ...myTweets]);
         dispatch({
@@ -82,7 +109,7 @@ const Beranda = () => {
         });
       }
     } catch (e) {
-      console.log(e);
+      toast.error(e);
     }
   }
 
@@ -97,7 +124,13 @@ const Beranda = () => {
           setPeopleTweets(response.data.data);
         }
       } catch (e) {
-        console.log(e);
+        toast.error(e);
+      }
+    } else {
+      try {
+        getMyTweets(token.token);
+      } catch (e) {
+        toast.error(e);
       }
     }
   }
@@ -113,24 +146,9 @@ const Beranda = () => {
 
   // init my tweets
   useEffect(() => {
-    const getMyTweets = async () => {
-      setIsLoading(true);
-      await tweetsService
-        .get("/mytweets", {
-          headers: {
-            Authorization: `Bearer ${token.token}`,
-          },
-        })
-        .then((response) => {
-          setIsLoading(false);
-          setMyTweets(response.data.data);
-          dispatch({ type: "INIT", payload: response.data.data });
-        });
-    };
-
-    getMyTweets();
     getPeopleTweets();
-  }, [token.token, dispatch]);
+    setMyTweets(state.data);
+  }, [state.data]);
 
   return (
     <>
@@ -184,6 +202,11 @@ const Beranda = () => {
               username={item.username}
               email={item.email}
               created_at={item.created_at}
+              likes={item.likes}
+              likesArr={item.likesArr}
+              isLike={item.isLike || false}
+              setMyTweets={setMyTweets}
+              cardType="You"
             />
           ))}
         </div>
@@ -200,6 +223,11 @@ const Beranda = () => {
               username={item.username}
               email={item.email}
               created_at={item.created_at}
+              likes={item.likes}
+              likesArr={item.likesArr}
+              isLike={item.isLike || false}
+              setPeopleTweets={setPeopleTweets}
+              cardType="People"
             />
           ))}
         </div>

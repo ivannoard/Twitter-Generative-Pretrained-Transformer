@@ -55,12 +55,12 @@ const navMenu = [
     path: `/profil/${userData.id}`,
     icon: <GiPlagueDoctorProfile size={22} className="text-gray-500" />,
   },
-  {
-    id: 9,
-    name: "Lainnya",
-    path: "/lainnya",
-    icon: <BsThreeDots size={22} className="text-gray-500" />,
-  },
+  // {
+  //   id: 9,
+  //   name: "Lainnya",
+  //   path: "#",
+  //   icon: <BsThreeDots size={22} className="text-gray-500" />,
+  // },
 ];
 
 export default navMenu;

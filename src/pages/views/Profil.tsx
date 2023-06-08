@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import {
+  LikesTweet,
   LoadingPage,
   QuestionTweet,
   ReplyTweet,
   ViewHeader,
 } from "../../components";
-import { userProfileService } from "../../services/userService";
-import { toast } from "react-hot-toast";
 import { tweetsService } from "../../services/tweetService";
+import { userProfileService } from "../../services/userService";
+
+type LikesTweetProps = {
+  user_id: number;
+  username: string;
+  created_at: string;
+  email: string;
+  question: string;
+  answer: string;
+  id: string;
+  image?: string;
+};
 
 type ReplyProps = {
   username: string;
@@ -26,6 +38,9 @@ type TweetProps = {
   email: string;
   created_at: string;
   user_id: number;
+  likes: number;
+  likesArr: [];
+  isLike: boolean;
 };
 
 type UserProps = {
@@ -37,7 +52,9 @@ type UserProps = {
 const Profil: React.FC = () => {
   const { userId } = useParams();
   const [dataUser, setDataUser] = useState<UserProps>();
+  const [tweetUser, setTweetUser] = useState<TweetProps[]>();
   const [dataUserReplies, setDataUserReplies] = useState<ReplyProps[]>();
+  const [dataUserLikes, setDataUserLikes] = useState<LikesTweetProps[]>([]);
   // const dataUser = JSON.parse(localStorage.getItem("data_user") || "");
   const [active, setACtive] = useState("Tweets");
   const navigate = useNavigate();
@@ -65,8 +82,18 @@ const Profil: React.FC = () => {
         setDataUserReplies(response.data.data);
       }
     } catch (e) {
-      console.log(e);
       toast.error("Cannot get replies");
+    }
+  }
+
+  async function getUserLikes(id: string) {
+    try {
+      const response = await tweetsService.get(`/likes/${id}`);
+      if (response.data.status === 200) {
+        setDataUserLikes(response.data.data);
+      }
+    } catch (e) {
+      toast.error("Cannot get user liked tweet");
     }
   }
 
@@ -85,6 +112,7 @@ const Profil: React.FC = () => {
         break;
       case "Likes":
         setACtive(nameButton);
+        getUserLikes(userId || "");
         break;
       default:
         break;
@@ -98,9 +126,10 @@ const Profil: React.FC = () => {
       if (response.data.status === 200) {
         setIsDelay(false);
         setDataUser(response.data.data);
+        setTweetUser(response.data.data.tweets);
       }
     } catch (e) {
-      console.log(e);
+      toast.error(e);
     }
   }
 
@@ -142,7 +171,7 @@ const Profil: React.FC = () => {
           </div>
           {/* content */}
           {active === "Tweets" &&
-            dataUser?.tweets.map((item, index) => (
+            tweetUser?.map((item, index) => (
               <div className="p-5 flex flex-col gap-3">
                 <QuestionTweet
                   key={index}
@@ -150,10 +179,15 @@ const Profil: React.FC = () => {
                   userId={Number(userId)}
                   question={item.question}
                   answer={item.answer}
-                  username={dataUser?.username}
-                  email={dataUser?.email}
+                  username={dataUser?.username || ""}
+                  email={dataUser?.email || ""}
                   created_at={item.created_at}
                   navigate={navigate}
+                  likes={item.likes}
+                  likesArr={item.likesArr}
+                  isLike={item.isLike || false}
+                  cardType="Profile"
+                  setTweetUser={setTweetUser}
                 />
               </div>
             ))}
@@ -166,6 +200,18 @@ const Profil: React.FC = () => {
                 email={item?.email}
                 created_at={item.created_at}
                 reply={item.reply}
+              />
+            ))}
+          {active === "Likes" &&
+            dataUserLikes.map((item) => (
+              <LikesTweet
+                userId={item.user_id}
+                username={item.username}
+                email={item.email}
+                created_at={item.created_at}
+                question={item.question}
+                answer={item.answer}
+                id={item.id}
               />
             ))}
         </>
